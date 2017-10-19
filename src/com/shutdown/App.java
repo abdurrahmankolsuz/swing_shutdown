@@ -11,23 +11,57 @@ import java.io.IOException;
 public class App {
     public static void main(String[] args) {
 
-        JFrame frame = new JFrame("Shutdown Computer");
-        frame.setSize(300, 100);
 
         JButton buttonSet = new JButton("Set");
+        buttonSet.setBounds(150,150,30,30);
+
+
+        JPanel panel = new JPanel();
+        panel.add( buttonSet );
+        panel.setBounds(150,250,30,30);
+
+        JFrame frame = new JFrame("Shutdown Computer");
+        frame.setSize(300,300);
+
+
+
+        JLabel jLabelHours = new JLabel();
+        jLabelHours.setBounds(50,50,100,30);
+        jLabelHours.setText("Hours");
         final JTextField textHours = new JTextField(15);
+        textHours.setBounds(100,50,100,30);
+        JLabel jLabelMinutes = new JLabel();
+        jLabelMinutes.setBounds(50,100,100,30);
+        jLabelMinutes.setText("Minutes");
         final JTextField textMinutes = new JTextField(15);
+        textMinutes.setBounds(100,100,100,30);
+
+
 
         numOnly(textHours);
         numOnly(textMinutes);
+
+//       frame.getContentPane().setLayout(new FlowLayout());
+        frame.getContentPane().add(jLabelHours);
+        frame.getContentPane().add(textHours);
+        frame.getContentPane().add(jLabelMinutes);
+        frame.getContentPane().add(textMinutes);
+        frame.getContentPane().add(panel,BorderLayout.CENTER);
+
+
+//       frame.pack();
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setVisible(true);
+
 
         buttonSet.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
                 try {
-                    shutdown(Integer.parseInt(textHours.getText()) * 3600 + Integer.parseInt(textMinutes.getText()) * 60);
                     JOptionPane.showMessageDialog(null, "\n" +
                             "Your computer will be turned off in " + (Integer.parseInt(textHours.getText()) * 60) + Integer.parseInt(textMinutes.getText()) + " minutes. ");
+                    shutdown(Integer.parseInt(textHours.getText()) * 3600 + Integer.parseInt(textMinutes.getText()) * 60);
+
                 } catch (IOException e1) {
                     e1.printStackTrace();
                 }
@@ -35,15 +69,6 @@ public class App {
             }
 
         });
-
-        frame.getContentPane().setLayout(new FlowLayout());
-        frame.getContentPane().add(textHours);
-        frame.getContentPane().add(textMinutes);
-        frame.getContentPane().add(buttonSet);
-
-        frame.pack();
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
     }
 
     public static void shutdown(Integer time) throws RuntimeException, IOException {
