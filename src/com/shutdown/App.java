@@ -26,30 +26,29 @@ public class App {
 
 
         JLabel jLabelHours = new JLabel();
-        jLabelHours.setBounds(50,50,100,30);
+        jLabelHours.setBounds(50,50,100,20);
         jLabelHours.setText("Hours");
         final JTextField textHours = new JTextField(15);
-        textHours.setBounds(100,50,100,30);
+        textHours.setBounds(100,50,100,20);
         JLabel jLabelMinutes = new JLabel();
-        jLabelMinutes.setBounds(50,100,100,30);
+        jLabelMinutes.setBounds(50,100,100,20);
         jLabelMinutes.setText("Minutes");
         final JTextField textMinutes = new JTextField(15);
-        textMinutes.setBounds(100,100,100,30);
-
-
+        textMinutes.setBounds(100,100,100,20);
 
         numOnly(textHours);
         numOnly(textMinutes);
 
-//       frame.getContentPane().setLayout(new FlowLayout());
         frame.getContentPane().add(jLabelHours);
         frame.getContentPane().add(textHours);
         frame.getContentPane().add(jLabelMinutes);
         frame.getContentPane().add(textMinutes);
         frame.getContentPane().add(panel,BorderLayout.CENTER);
+        frame.getContentPane().setBackground(Color.pink);
 
+        frame.setLocationRelativeTo( null );
+        frame.setResizable(false);
 
-//       frame.pack();
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
@@ -57,14 +56,21 @@ public class App {
         buttonSet.addMouseListener(new MouseAdapter() {
             @Override
             public void mousePressed(MouseEvent e) {
-                try {
-                    JOptionPane.showMessageDialog(null, "\n" +
-                            "Your computer will be turned off in " + (Integer.parseInt(textHours.getText()) * 60) + Integer.parseInt(textMinutes.getText()) + " minutes. ");
-                    shutdown(Integer.parseInt(textHours.getText()) * 3600 + Integer.parseInt(textMinutes.getText()) * 60);
 
-                } catch (IOException e1) {
-                    e1.printStackTrace();
+                if(textHours.getText().equalsIgnoreCase("") || textMinutes.getText().equalsIgnoreCase(""))
+                    JOptionPane.showMessageDialog(null, "\n" +
+                            "Please Enter time!");
+                else{
+                    try {
+                        JOptionPane.showMessageDialog(null, "\n" +
+                                "Your computer will be turned off in " + (Integer.parseInt(textHours.getText()) * 60) + Integer.parseInt(textMinutes.getText()) + " minutes. ");
+                        shutdown(Integer.parseInt(textHours.getText()) * 3600 + Integer.parseInt(textMinutes.getText()) * 60);
+
+                    } catch (IOException e1) {
+                        e1.printStackTrace();
+                    }
                 }
+
 
             }
 
